@@ -1,4 +1,5 @@
 .text {
+  display: flex;
   padding-top: 1px;
   color: var(--figma-color-text);
   pointer-events: none;

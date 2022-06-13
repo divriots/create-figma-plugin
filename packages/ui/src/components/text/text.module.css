@@ -12,10 +12,6 @@
   content: '';
   pointer-events: none;
 }
-.text a {
-  color: var(--color-accent);
-  pointer-events: all;
-}
 
 .numeric {
   font-variant-numeric: tabular-nums;

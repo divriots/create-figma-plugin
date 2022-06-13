@@ -40,7 +40,3 @@ export const AlignRight = function () {
     </div>
   )
 }
-
-export const WithHelp = function () {
-  return <Text helplink="#">Need help</Text>
-}

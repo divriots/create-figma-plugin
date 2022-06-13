@@ -32,7 +32,7 @@ export function Text({
       {children}
       {helplink && (
         <a href={helplink} rel="noreferrer" target="_blank">
-          <IconCircleHelp16 color="black-30" />
+          <IconCircleHelp16 />
         </a>
       )}
     </div>

@@ -23,6 +23,7 @@ export const LongText = function () {
   const longText = Array(100).fill('Text').join(' ')
   return (
     <Banner icon={<IconWarning32 />} variant="warning">
+      Hello <a href="#">World</a>.{longText}
       {longText}
     </Banner>
   )

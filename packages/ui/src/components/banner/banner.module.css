@@ -36,3 +36,8 @@
 .warning .children {
   color: var(--figma-color-text-onwarning);
 }
+
+/* Link component does not have enough contrast on our warning bg */
+.warning :global(a) {
+  color: #394360;
+}

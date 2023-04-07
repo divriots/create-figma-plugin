@@ -8,7 +8,8 @@ import { Id } from './types'
 export function updateMenuElementLayout(
   rootElement: HTMLDivElement,
   menuElement: HTMLDivElement,
-  selectedId: Id
+  selectedId: Id,
+  relativePosElement: HTMLElement
 ) {
   const menuElementMaxWidth = window.innerWidth - 2 * VIEWPORT_MARGIN
   const menuElementMaxHeight = window.innerHeight - 2 * VIEWPORT_MARGIN
@@ -17,20 +18,29 @@ export function updateMenuElementLayout(
 
   const selectedLabelElement = getSelectedLabelElement(menuElement, selectedId)
   const rootElementBoundingClientRect = rootElement.getBoundingClientRect()
+  const relativePosElementBoundingClientRect =
+    relativePosElement.getBoundingClientRect()
   const isScrollable = menuElement.offsetHeight === menuElementMaxHeight
+  menuElement.style.minWidth = `${rootElementBoundingClientRect.width}px`
 
-  const left = computeMenuElementLeft({
-    menuWidth: menuElement.offsetWidth,
-    rootLeft: rootElementBoundingClientRect.left
-  })
-  const top = computeMenuElementTop({
-    isScrollable,
-    menuHeight: menuElement.offsetHeight,
-    rootHeight: rootElement.offsetHeight,
-    rootTop: rootElementBoundingClientRect.top,
-    selectedTop:
-      selectedLabelElement === null ? null : selectedLabelElement.offsetTop
-  })
+  const left =
+    computeMenuElementLeft({
+      menuWidth: menuElement.offsetWidth,
+      rootLeft: rootElementBoundingClientRect.left
+    }) +
+    (rootElementBoundingClientRect.left -
+      relativePosElementBoundingClientRect.left)
+  const top =
+    computeMenuElementTop({
+      isScrollable,
+      menuHeight: menuElement.offsetHeight,
+      rootHeight: rootElement.offsetHeight,
+      rootTop: rootElementBoundingClientRect.top,
+      selectedTop:
+        selectedLabelElement === null ? null : selectedLabelElement.offsetTop
+    }) +
+    (rootElementBoundingClientRect.top -
+      relativePosElementBoundingClientRect.top)
   menuElement.style.left = `${left}px`
   menuElement.style.top = `${top}px`
 

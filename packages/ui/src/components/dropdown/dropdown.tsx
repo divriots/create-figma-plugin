@@ -1,4 +1,5 @@
 import { ComponentChildren, h, JSX, RefObject } from 'preact'
+import { createPortal } from 'preact/compat'
 import { useCallback, useRef, useState } from 'preact/hooks'
 
 import menuStyles from '../../css/menu.module.css'
@@ -101,7 +102,7 @@ export function Dropdown<
   const triggerUpdateMenuElementLayout = useCallback(function (selectedId: Id) {
     const rootElement = getCurrentFromRef(rootElementRef)
     const menuElement = getCurrentFromRef(menuElementRef)
-    updateMenuElementLayout(rootElement, menuElement, selectedId)
+    updateMenuElementLayout(rootElement, menuElement, selectedId, document.body)
   }, [])
 
   const handleRootFocus = useCallback(
@@ -252,71 +253,76 @@ export function Dropdown<
         <div class={dropdownStyles.underline} />
       ) : null}
       <div class={dropdownStyles.border} />
-      <div
-        ref={menuElementRef}
-        class={createClassName([
-          menuStyles.menu,
-          dropdownStyles.menu,
-          disabled === true || isMenuVisible === false
-            ? menuStyles.hidden
-            : null
-        ])}
-        onMouseDown={handleMenuMouseDown}
-      >
-        {options.map(function (
-          option: DropdownOption<Value>,
-          index: number
-        ): JSX.Element {
-          if ('separator' in option) {
-            return <hr key={index} class={menuStyles.optionSeparator} />
-          }
-          if ('header' in option) {
+      {createPortal(
+        <div
+          ref={menuElementRef}
+          class={createClassName([
+            menuStyles.menu,
+            dropdownStyles.menu,
+            disabled === true || isMenuVisible === false
+              ? menuStyles.hidden
+              : null
+          ])}
+          onMouseDown={handleMenuMouseDown}
+        >
+          {options.map(function (
+            option: DropdownOption<Value>,
+            index: number
+          ): JSX.Element {
+            if ('separator' in option) {
+              return <hr key={index} class={menuStyles.optionSeparator} />
+            }
+            if ('header' in option) {
+              return (
+                <h1 key={index} class={menuStyles.optionHeader}>
+                  {option.header}
+                </h1>
+              )
+            }
             return (
-              <h1 key={index} class={menuStyles.optionHeader}>
-                {option.header}
-              </h1>
+              <label
+                key={index}
+                class={createClassName([
+                  menuStyles.optionValue,
+                  option.disabled === true
+                    ? menuStyles.optionValueDisabled
+                    : null,
+                  option.disabled !== true && `${index}` === selectedId
+                    ? menuStyles.optionValueSelected
+                    : null
+                ])}
+              >
+                <input
+                  checked={value === option.value}
+                  class={menuStyles.input}
+                  disabled={option.disabled === true}
+                  name={name}
+                  // If clicked on an unselected element, set the value
+                  onChange={
+                    value === option.value ? undefined : handleOptionChange
+                  }
+                  // Else blur if clicked on an already-selected element
+                  onClick={value === option.value ? triggerBlur : undefined}
+                  onMouseMove={handleScrollableMenuItemMouseMove}
+                  tabIndex={-1}
+                  type="radio"
+                  value={`${option.value}`}
+                  {...{ [ITEM_ID_DATA_ATTRIBUTE_NAME]: `${index}` }}
+                />
+                {option.value === value ? (
+                  <div class={menuStyles.checkIcon}>
+                    <IconMenuCheckmarkChecked16 />
+                  </div>
+                ) : null}
+                {typeof option.text === 'undefined'
+                  ? option.value
+                  : option.text}
+              </label>
             )
-          }
-          return (
-            <label
-              key={index}
-              class={createClassName([
-                menuStyles.optionValue,
-                option.disabled === true
-                  ? menuStyles.optionValueDisabled
-                  : null,
-                option.disabled !== true && `${index}` === selectedId
-                  ? menuStyles.optionValueSelected
-                  : null
-              ])}
-            >
-              <input
-                checked={value === option.value}
-                class={menuStyles.input}
-                disabled={option.disabled === true}
-                name={name}
-                // If clicked on an unselected element, set the value
-                onChange={
-                  value === option.value ? undefined : handleOptionChange
-                }
-                // Else blur if clicked on an already-selected element
-                onClick={value === option.value ? triggerBlur : undefined}
-                onMouseMove={handleScrollableMenuItemMouseMove}
-                tabIndex={-1}
-                type="radio"
-                value={`${option.value}`}
-                {...{ [ITEM_ID_DATA_ATTRIBUTE_NAME]: `${index}` }}
-              />
-              {option.value === value ? (
-                <div class={menuStyles.checkIcon}>
-                  <IconMenuCheckmarkChecked16 />
-                </div>
-              ) : null}
-              {typeof option.text === 'undefined' ? option.value : option.text}
-            </label>
-          )
-        })}
-      </div>
+          })}
+        </div>,
+        document.body
+      )}
     </div>
   )
 }

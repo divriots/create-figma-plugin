@@ -95,7 +95,7 @@
 }
 
 .menu {
-  z-index: var(--z-index-1);
+  z-index: var(--z-index-2);
   max-width: 0;
   max-height: 0;
 }

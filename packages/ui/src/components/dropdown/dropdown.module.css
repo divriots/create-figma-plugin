@@ -96,6 +96,7 @@
 
 .menu {
   z-index: var(--z-index-2);
+  position: fixed;
   max-width: 0;
   max-height: 0;
 }

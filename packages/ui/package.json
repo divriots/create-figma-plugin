@@ -1,6 +1,6 @@
 {
-  "name": "@create-figma-plugin/ui",
-  "version": "2.3.0",
+  "name": "@divriots/create-figma-plugin-ui",
+  "version": "2.3.0-divriots.3",
   "publishConfig": {
     "access": "public"
   },
@@ -35,7 +35,17 @@
   "files": [
     "lib"
   ],
-  "exports": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./lib/css/base.css": {
+      "import": "./lib/css/base.css",
+      "require": "./lib/css/base.css"
+    },
+    "./lib/css/theme.css": {
+      "import": "./lib/css/theme.css",
+      "require": "./lib/css/theme.css"
+    }
+  },
   "main": "./lib/index.js",
   "scripts": {
     "prebuild": "npm run clean",

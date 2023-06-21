@@ -1,6 +1,6 @@
 {
-  "name": "@create-figma-plugin/utilities",
-  "version": "2.3.0",
+  "name": "@divriots/create-figma-plugin-utilities",
+  "version": "2.3.0-divriots.4",
   "publishConfig": {
     "access": "public"
   },

@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@create-figma-plugin/ui": "^<%- versions.createFigmaPlugin.ui %>",
-    "@create-figma-plugin/utilities": "^<%- versions.createFigmaPlugin.utilities %>",
+    "@create-figma-plugin/utilities": "^<%- versions.divriots.createFigmaPluginUtilities %>",
     "preact": ">=10"
   },
   "devDependencies": {

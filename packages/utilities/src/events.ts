@@ -96,11 +96,11 @@ if (typeof window === 'undefined') {
     invokeEventHandler(name, args)
   }
 } else {
-  window.onmessage = function (event: MessageEvent): void {
+  window.addEventListener('message', function (event: MessageEvent): void {
     if (typeof event.data.pluginMessage === 'undefined') {
       return
     }
     const [name, ...args]: [string, Array<unknown>] = event.data.pluginMessage
     invokeEventHandler(name, args)
-  }
+  })
 }

@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@create-figma-plugin/utilities": "^<%- versions.createFigmaPlugin.utilities %>"
+    "@create-figma-plugin/utilities": "^<%- versions.divriots.createFigmaPluginUtilities %>"
   },
   "devDependencies": {
     "@create-figma-plugin/build": "^<%- versions.createFigmaPlugin.build %>",

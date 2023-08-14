@@ -40,6 +40,9 @@ export async function createFigmaPluginAsync(options: {
       name: createName(directoryName),
       versions: {
         createFigmaPlugin: versions,
+        divriots: {
+          createFigmaPluginUtilities: '2.3.0-divriots.4'
+        },
         figma: {
           pluginTypings: constants.packageJson.versions.pluginTypings,
           widgetTypings: constants.packageJson.versions.widgetTypings

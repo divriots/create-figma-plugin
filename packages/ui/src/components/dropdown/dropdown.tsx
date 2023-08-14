@@ -102,7 +102,12 @@ export function Dropdown<
   const triggerUpdateMenuElementLayout = useCallback(function (selectedId: Id) {
     const rootElement = getCurrentFromRef(rootElementRef)
     const menuElement = getCurrentFromRef(menuElementRef)
-    updateMenuElementLayout(rootElement, menuElement, selectedId, document.body)
+    updateMenuElementLayout(
+      rootElement,
+      menuElement,
+      selectedId,
+      document.documentElement
+    )
   }, [])
 
   const handleRootFocus = useCallback(

@@ -364,7 +364,7 @@ export function TextboxAutocomplete<Name extends string>({
           class={createClassName([
             menuStyles.menu,
             disabled === true || isMenuVisible === false
-              ? menuStyles.hidden
+              ? menuStyles.displayNone
               : null,
             top === true
               ? textboxAutocompleteStyles.top
